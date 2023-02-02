@@ -43,36 +43,43 @@ setTimeout(() => {
 
 // using promises to avoid call back hell //
 
-let a = true;
 
-const prom_demo = (time,callback) => {
-    return new Promise((resolve,reject) => {
-        if(a == true){
-            setTimeout(() => {
-                resolve(callback())
-            }, time);
-        }
-        else{
-            reject('failure');
-        }
-    })
-}
 
-prom_demo(1000, () => {
-    console.log('prints 1');
+let prom = (time, text) => {
+    return new Promise((resolve, reject) => {
+      if (1 == 1) {
+        setTimeout(() => {
+          resolve(`prints ${text}`);
+        }, time);
+      } else {
+        reject();
+      }
+    });
+};
+
+
+  
+prom(5000, "1").then((x) => {
+    console.log(x);
+    return prom(1000, "2");
+}).then((x) => {
+    console.log(x);
+    return prom(1000, "3");
 })
-.then(() => {
-    return prom_demo(2000, () => {
-        console.log('prints 2')
-    })
-})
-.then(() => {
-    return prom_demo(3000, () => {
-        console.log('prints 3')
-    })
-})
-.then(() => {
-    return prom_demo(4000,() =>{
-        console.log('prints 4')
-    })
-})
+.then((x) => {
+    console.log(x);
+});
+
+// using asycn await instead of traditional promises using then method //
+
+async function learning() {
+    const temp = await prom(2000, "1");
+    console.log(temp);
+    const temp2 = await prom(1000, "2");
+    console.log(temp2);
+    const temp3 = await prom(1500, "3");
+    console.log(temp3);
+  }
+  
+  learning();
+  
